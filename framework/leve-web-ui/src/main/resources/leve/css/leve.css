@@ -1,0 +1,24 @@
+body {
+	font-size: 14px;
+}
+
+.leve-uppercase{
+	text-transform: uppercase;
+}
+
+.form-horizontal label{
+	text-align: left !important;
+	margin: 0;
+	padding: 0 0 0 10px !important;
+	border-bottom: 1px solid #eee; 
+	font-size: 14px;
+}
+
+.form-horizontal input, .form-horizontal select {
+	padding: 0px;
+	font-size: 14px;
+}
+
+.form-horizontal .control-group{
+	margin-bottom: 5px;
+}
