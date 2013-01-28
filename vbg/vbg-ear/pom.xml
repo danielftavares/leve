@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>vbg-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>ear assembly</name>
+	<parent>
+		<groupId>org.leve.projects.vbg</groupId>
+		<artifactId>vbg</artifactId>
+		<version>1.0</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>org.leve.projects.vbg</groupId>
+			<artifactId>vbg-ejbs</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>org.leve.projects.vbg</groupId>
+			<artifactId>vbg-web</artifactId>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.leve.framework</groupId>
+			<artifactId>leve-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>org.leve.projects.vbg</groupId>
+							<artifactId>vbg-web</artifactId>
+							<contextRoot>/vbg-web</contextRoot>
+						</webModule>
+					</modules>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+					<security>
+						<security-role id="SecurityRole_LeveUser">
+							<role-name>LeveUser</role-name>
+						</security-role>
+					</security>
+					<jboss>
+						<version>5</version>
+						<library-directory>/APP-INF/lib</library-directory>
+						<loader-repository>org.mindbug:loader=${project.build.finalName}.ear</loader-repository>
+						<loader-repository-config>java2ParentDelegation=false</loader-repository-config>
+						<security-domain>LeveAuthDomain</security-domain>
+					</jboss>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

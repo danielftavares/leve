@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+   http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+   version="2.0">
+	<persistence-unit name="levePU">
+		<!-- If you are running in a production environment, add a managed data 
+			source, this example data source is just for development and testing! -->
+		<!-- The datasource is deployed as WEB-INF/ticket-monster-ds.xml, you can 
+			find it in the source at src/main/webapp/WEB-INF/ticket-monster-ds.xml -->
+		<jta-data-source>java:/leveDS</jta-data-source>
+		
+		
+		<class>org.leve.beans.Group</class>
+		<class>org.leve.beans.User</class>
+		<class>org.leve.beans.UserGroup</class>
+		<class>org.leve.beans.Message</class>
+		<class>org.leve.beans.Numbering</class>
+		<class>org.leve.beans.Domain</class>
+		<class>org.leve.beans.DomainValue</class>
+		<class>org.leve.vbg.beans.common.Country</class>
+		<class>org.leve.vbg.beans.common.State</class>
+		<class>org.leve.vbg.beans.common.City</class>
+		<class>org.leve.vbg.beans.common.Brand</class>
+		<class>org.leve.vbg.beans.common.ProductType</class>
+		<class>org.leve.vbg.beans.common.Product</class>
+		<class>org.leve.vbg.beans.stock.Invoice</class>
+		<class>org.leve.vbg.beans.stock.InvoiceProduct</class>
+		
+		<properties>
+			<!-- for detecting the Mapped Files -->
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
+		</properties>
+	</persistence-unit>
+</persistence>
