@@ -74,10 +74,8 @@ public class LeveTagResourcesServlet extends HttpServlet {
 		long now = System.currentTimeMillis();
 		//res being the HttpServletResponse of the request
 		response.addHeader("Cache-Control", "max-age=" + CACHE_DURATION_IN_SECOND);
-//		response.addHeader("Cache-Control", "must-revalidate");//optional
-//		response.setDateHeader("Expires", now + CACHE_DURATION_IN_MS);
-//		response.setHeader("Pragma", "private");
-//		response.setHeader("Cache-Control", "max-age=" + CACHE_DURATION_IN_SECOND);
-//		response.setHeader("Cache-Control", "must-revalidate");//optional
+		response.addHeader("Cache-Control", "must-revalidate");//optional
+		response.setDateHeader("Last-Modified", now);
+		response.setDateHeader("Expires", now + CACHE_DURATION_IN_MS);
 	}
 }
