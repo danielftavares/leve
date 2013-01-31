@@ -70,12 +70,19 @@
          <id>openshift</id>
          <build>
             <plugins>
-               <plugin>
-                  <artifactId>maven-ear-plugin</artifactId>
-                  <configuration>
-                     <outputDirectory>deployments</outputDirectory>
-                  </configuration>
-               </plugin>
+	            <plugin>
+	                <groupId>org.jboss.as.plugins</groupId>
+	                <artifactId>jboss-as-maven-plugin</artifactId>
+	                <version>7.3.Final</version>
+	                <executions>
+	                    <execution>
+	                        <phase>install</phase>
+	                        <goals>
+	                            <goal>deploy</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+	            </plugin>
             </plugins>
          </build>
       </profile>
