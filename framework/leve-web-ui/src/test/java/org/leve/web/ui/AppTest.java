@@ -10,8 +10,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.leve.ejb.UserBean;
-
 /**
  * Unit test for simple App.
  */
@@ -35,16 +33,9 @@ public class AppTest
     {
         return new TestSuite( AppTest.class );
     }
-
-    @EJB
-    private UserBean userBean;
     
     @Override
     protected void setUp() throws Exception {
-		 Properties p = new Properties();
-	    p.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.openejb.client.LocalInitialContextFactory");
-	    InitialContext initialContext = new InitialContext(p);
-	    initialContext.bind("inject", this);
     	super.setUp();
     }
     /**
