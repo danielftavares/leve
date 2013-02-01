@@ -272,7 +272,9 @@ var form2js = (function()
 			case 'INPUT':
 				if($(fieldNode).hasClass('leve-decimal') && $(fieldNode).val()){
 					return getFloat($(fieldNode).val());
-				}
+				} else if($(fieldNode).hasClass('leve-calendar') && $(fieldNode).val()){
+					return $(fieldNode).parent('.datepicker').datepicker().data('datepicker').getDate();
+				}  
 			case 'TEXTAREA':
 				switch (fieldNode.type.toLowerCase()) {
 					case 'radio':

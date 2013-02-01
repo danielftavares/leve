@@ -27,7 +27,7 @@ public class Invoice {
 	@SequenceGenerator(name="STK_INVOICE_GENERATOR", sequenceName="SEQ_STK_INVOICE")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="STK_INVOICE_GENERATOR")
 	@Column(name="ID_INVOICE")
-	private Integer idInvoice;
+	private Long idInvoice;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="DT_ARRIVE")
@@ -50,11 +50,11 @@ public class Invoice {
 	@OneToMany(mappedBy="invoice")
 	private List<InvoiceProduct> stkInvoiceProducts;
 
-	public Integer getIdInvoice() {
+	public Long getIdInvoice() {
 		return this.idInvoice;
 	}
 
-	public void setIdInvoice(Integer idInvoice) {
+	public void setIdInvoice(Long idInvoice) {
 		this.idInvoice = idInvoice;
 	}
 

@@ -1,8 +1,0 @@
-<Context>
-  <Realm className="org.apache.catalina.realm.JAASRealm"
-         appName="leve"
-         userClassNames="org.leve.jaas.LeveJaasUserPrincipal"
-         roleClassNames="org.leve.jaas.LeveJaasUserPrincipal"
-         useContextClassLoader="false"
-         debug="true" />
-</Context>

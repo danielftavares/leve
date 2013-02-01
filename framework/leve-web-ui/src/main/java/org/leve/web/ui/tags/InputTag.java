@@ -103,10 +103,11 @@ public class InputTag extends LeveBaseTag {
 					getRequestLocaleString());
 			root.addCustomAttribute("data-date-format",
 					getDateFormatRequestLocale());
+			styleClass += " leve-calendar";
 		} else {
 			if (attributeType.equals(BigDecimal.class)) {
 				styleClass += " leve-decimal";
-			}
+			} 
 			if (isUppercase()) {
 				styleClass += " leve-uppercase";
 			}
