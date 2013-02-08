@@ -189,7 +189,9 @@ public abstract class BaseDAO<T, F> {
 		if(orderAttr == null){
 			orderAttr = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveDesc.class).getName();
 		}
-		criteria.addOrder(Order.asc(orderAttr));
+		if (orderAttr != null){
+			criteria.addOrder(Order.asc(orderAttr));
+		}
 		return criteria.list(em);
 	}
 

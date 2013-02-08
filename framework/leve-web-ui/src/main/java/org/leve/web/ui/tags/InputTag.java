@@ -84,6 +84,15 @@ public class InputTag extends LeveBaseTag {
 		}
 	}
 	
+	protected <T extends Annotation> T  getFieldAnnotation(Class<T> annotation){
+		return  ReflectionUtil.getAnnotationField(getFieldAttribute(), annotation);
+	}
+
+	protected FormTag getFormTag() {
+		FormTag p = (FormTag) getParent();
+		return p;
+	}
+	
 	protected String getIdFieldManyToOne() {
 		Field f = getFieldAttribute();
 		return ReflectionUtil.getFieldWithAnnotation(f.getType(), Id.class).getName();
@@ -119,15 +128,6 @@ public class InputTag extends LeveBaseTag {
 		}
 	}
 	
-	protected <T extends Annotation> T  getFieldAnnotation(Class<T> annotation){
-		return  ReflectionUtil.getAnnotationField(getFieldAttribute(), annotation);
-	}
-
-	protected FormTag getFormTag() {
-		FormTag p = (FormTag) getParent();
-		return p;
-	}
-
 	protected AbstractHtmlElement getInputElement() {
 		DivHtmlElement root = new DivHtmlElement("controls");
 

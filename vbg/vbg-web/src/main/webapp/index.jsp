@@ -26,7 +26,7 @@
 								<li><a href="#"><l:label label="shortcuts" /></a></li>
 								<li><a href="#"><l:label label="settings" /></a></li>
 								<li class="divider"></li>
-								<li><a href="#"><l:label label="logout" /></a></li>
+								<li><a href="leve/user/logout"><l:label label="logout" /></a></li>
 							</ul></li>
 					</ul>
 				</div>

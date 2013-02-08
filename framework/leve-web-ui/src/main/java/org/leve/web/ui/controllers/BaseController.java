@@ -25,16 +25,16 @@ public abstract class BaseController<T, F> {
 		return getBussinesBean().save(bean);
 	}
 	
-	@Path("/list")
 	@POST
+	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public PaginatedList<T> list(BaseFindDto<F> findDto) {
 		return getBussinesBean().listPaginated(findDto);
 	}
 	
-	@Path("/list")
 	@GET
+	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<T> list() {
 		return getBussinesBean().list();

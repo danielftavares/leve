@@ -37,6 +37,10 @@ public class LeveException extends RuntimeException {
 		this.parent = parent;
 	}
 	
+	public LeveException(Exception e) {
+		super(e);
+	}
+
 	public void addError(String message, String field, Object bean){
 		if(errors == null){
 			errors = new LinkedList<LeveException>();

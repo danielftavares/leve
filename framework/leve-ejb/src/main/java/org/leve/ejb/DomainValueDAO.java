@@ -45,6 +45,8 @@ public class DomainValueDAO extends BaseDAO<DomainValue, DomainValueFindDto> {
 		Criteria criteria = Criteria.forClass(getPersistentClass());
 		criteria.add(Restrictions.eq("domain.name", domainName));
 		
+		criteria.addOrder(Order.asc("index"));
+		
 		return criteria.list(em);
 	}
 }

@@ -146,7 +146,7 @@ $(function() {
 		var select = $(this);
 		var action = select.data('bean-action');
 		$.getJSON(servlet_path + "/leve/" + action + "/list", function(resp) {
-			$(resp).each(function(bean){
+			$(resp).each(function(){
 				select.append($('<option>', { value : this[select.data('bean-id')] }).text(this[select.data('bean-desc')]));
 			});
 		});
