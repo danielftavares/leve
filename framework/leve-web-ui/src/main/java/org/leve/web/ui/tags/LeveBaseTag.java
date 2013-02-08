@@ -46,6 +46,7 @@ public abstract class LeveBaseTag extends BodyTagSupport implements Cloneable {
 	protected static final String HTML_TAG_I = "i";
 	protected static final String HTML_TAG_P = "p";
 	protected static final String HTML_TAG_UL = "ul";
+	protected static final String HTML_TAG_LI = "li";
 	protected static final String HTML_TAG_BODY = "body";
 	protected static final String HTML_TAG_BUTTON = "button";
 	protected static final String HTML_TAG_TABLE = "table";

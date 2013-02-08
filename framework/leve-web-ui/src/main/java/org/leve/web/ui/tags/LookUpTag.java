@@ -1,12 +1,7 @@
 package org.leve.web.ui.tags;
 
-import java.lang.reflect.Field;
-
-import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-import org.leve.annotation.LeveDesc;
-import org.leve.annotation.LeveKey;
 import org.leve.reflections.ReflectionUtil;
 import org.leve.web.ui.tags.html.AbstractHtmlElement;
 import org.leve.web.ui.tags.html.ButtonHtmlElement;
@@ -38,9 +33,9 @@ public class LookUpTag extends InputTag {
 	protected String writeBeforeBody() {
 		StringBuilder out = new StringBuilder();
 
-		String fieldKey = getKeyFieldName();
-		String fieldDesc = getDescFieldName();
-		String fieldId = getIdFieldName();
+		String fieldKey = getKeyManyToOned();
+		String fieldDesc = getDescManyToOne();
+		String fieldId = getIdFieldManyToOne();
 		String filedAction = getKeyFieldAction();
 		
 		String firstField = fieldKey;
@@ -144,65 +139,25 @@ public class LookUpTag extends InputTag {
 
 	
 	private String getAttrPackge() {
-		String pack = getLookupField().getType().getPackage().getName();
+		String pack = getFieldAttribute().getType().getPackage().getName();
 		return pack.substring(pack.lastIndexOf('.') + 1);
 	}
 
 
 	private String getKeySize() {
-		return getLookUpSize(getKeyFieldName());
+		return getLookUpSize(getKeyManyToOned());
 	}
 	
 	private String getDescSize() {
-		return getLookUpSize(getDescFieldName());
+		return getLookUpSize(getDescManyToOne());
 	}
 
 	private String getLookUpSize(String field) {
-		Size s = ReflectionUtil.getAnnotationField(getLookupField(), Size.class);
+		Size s = ReflectionUtil.getAnnotationField(getFieldAttribute(), Size.class);
 		if(s!=null){
 			return String.valueOf(s.max());
 		}
 		return null;
-	}
-
-	private String getKeyFieldAction() {
-		Field f = getLookupField();
-		String action = f.getType().getSimpleName();
-		return Character.toLowerCase(action.charAt(0)) +action.substring(1) ;
-	}
-
-
-	private String getIdFieldName() {
-		Field f = getLookupField();
-		return ReflectionUtil.getFieldWithAnnotation(f.getType(), Id.class).getName();
-	}
-	
-	private String getDescFieldName() {
-		Field f = getLookupField();
-		Field rf = ReflectionUtil.getFieldWithAnnotation(f.getType(), LeveDesc.class);
-		
-		if(rf == null){
-			return null;
-		} else {
-			return rf.getName();
-		}
-	}
-
-	private String getKeyFieldName() {
-		Field f = getLookupField();
-		Field rf = ReflectionUtil.getFieldWithAnnotation(f.getType(), LeveKey.class);
-		
-		if(rf == null){
-			return null;
-		} else {
-			return rf.getName();
-		}
-	}
-
-
-	private Field getLookupField() {
-		Field f = ReflectionUtil.getField(getFormTag().getDto(), getAttribute());
-		return f;
 	}
 
 	@Override

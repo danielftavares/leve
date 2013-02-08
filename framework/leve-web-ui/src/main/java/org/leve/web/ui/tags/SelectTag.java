@@ -22,9 +22,21 @@ public class SelectTag extends InputTag {
 	protected AbstractHtmlElement getInputElement() {
 		DivHtmlElement root = new DivHtmlElement("controls");
 
-		SelectHtmlElement select = new SelectHtmlElement(null, null,getAttribute());
+		SelectHtmlElement select = null;
 		
-		addOptions(select);
+		if(getFieldAttribute().isAnnotationPresent(LeveDomain.class)){
+			select = new SelectHtmlElement(null, null,getAttribute());
+			addOptions(select);
+		} else {
+			// many to one
+			// options load by ajax. Can`t determine ejb here!
+			select = new SelectHtmlElement("leve-select-bean", null,getAttribute() + "."+ getIdFieldManyToOne());
+			select.addCustomAttribute("data-bean-type", getFieldAttribute().getType().getSimpleName().toLowerCase());
+			select.addCustomAttribute("data-bean-id", getIdFieldManyToOne());
+			select.addCustomAttribute("data-bean-key", getKeyManyToOned());
+			select.addCustomAttribute("data-bean-desc", getDescManyToOne());
+			select.addCustomAttribute("data-bean-action", getKeyFieldAction());
+		}
 		
 		root.addChild(select);
 

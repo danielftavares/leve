@@ -71,9 +71,13 @@ public class FormTag extends LeveBaseTag {
 
 	private void printTitle(StringBuilder out) {
 		if (getPage().getTitle() != null && !getPage().getTitle().trim().isEmpty()) {
+			printStartTag(out, HTML_TAG_UL,"class", "breadcrumb");
+			printStartTag(out, HTML_TAG_LI);
 			printStartTag(out, HTML_TAG_H5);
 			print(out, getMessage(getPage().getTitle()));
 			printEndTag(out, HTML_TAG_H5);
+			printEndTag(out, HTML_TAG_LI);
+			printEndTag(out, HTML_TAG_UL);
 		}
 	}
 

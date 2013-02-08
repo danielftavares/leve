@@ -76,4 +76,8 @@ public abstract class BaseBusinessBean<T, F>  {
 		}
 		return getDAO().autocomplete(desc);
 	}
+	
+	public List<T> list() {
+		return getDAO().list();
+	}
 }

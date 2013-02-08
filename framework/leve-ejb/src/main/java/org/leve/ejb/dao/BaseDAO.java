@@ -174,10 +174,22 @@ public abstract class BaseDAO<T, F> {
 	public List<T> autocomplete(String desc) {
 		Criteria criteria = Criteria.forClass(getPersistentClass());
 		
-		String keyField = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveDesc.class).getName();
-		criteria.add(Restrictions.like(keyField, desc+"%"));
+		String descField = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveDesc.class).getName();
+		criteria.add(Restrictions.like(descField, desc+"%"));
 		criteria.setMaxResults(10);
-		criteria.addOrder(Order.asc(keyField));
+		criteria.addOrder(Order.asc(descField));
+		return criteria.list(em);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> list() {
+		Criteria criteria = Criteria.forClass(getPersistentClass());
+		
+		String orderAttr = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveKey.class).getName();
+		if(orderAttr == null){
+			orderAttr = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveDesc.class).getName();
+		}
+		criteria.addOrder(Order.asc(orderAttr));
 		return criteria.list(em);
 	}
 

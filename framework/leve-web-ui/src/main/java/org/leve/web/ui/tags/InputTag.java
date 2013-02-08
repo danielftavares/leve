@@ -6,9 +6,12 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.leve.annotation.LeveDesc;
+import org.leve.annotation.LeveKey;
 import org.leve.annotation.LeveLabel;
 import org.leve.reflections.ReflectionUtil;
 import org.leve.web.ui.tags.html.AbstractHtmlElement;
@@ -81,10 +84,43 @@ public class InputTag extends LeveBaseTag {
 		}
 	}
 	
+	protected String getIdFieldManyToOne() {
+		Field f = getFieldAttribute();
+		return ReflectionUtil.getFieldWithAnnotation(f.getType(), Id.class).getName();
+	}
+	
+
+	protected String getKeyFieldAction() {
+		Field f = getFieldAttribute();
+		String action = f.getType().getSimpleName();
+		return Character.toLowerCase(action.charAt(0)) +action.substring(1) ;
+	}
+
+
+	protected String getDescManyToOne() {
+		Field f = getFieldAttribute();
+		Field rf = ReflectionUtil.getFieldWithAnnotation(f.getType(), LeveDesc.class);
+		
+		if(rf == null){
+			return null;
+		} else {
+			return rf.getName();
+		}
+	}
+
+	protected String getKeyManyToOned() {
+		Field f = getFieldAttribute();
+		Field rf = ReflectionUtil.getFieldWithAnnotation(f.getType(), LeveKey.class);
+		
+		if(rf == null){
+			return null;
+		} else {
+			return rf.getName();
+		}
+	}
+	
 	protected <T extends Annotation> T  getFieldAnnotation(Class<T> annotation){
-		FormTag p = getFormTag();
-		return  ReflectionUtil.getAnnotationField(p.getDto(),
-				getAttribute(), annotation);
+		return  ReflectionUtil.getAnnotationField(getFieldAttribute(), annotation);
 	}
 
 	protected FormTag getFormTag() {
@@ -178,7 +214,7 @@ public class InputTag extends LeveBaseTag {
 		return getFieldAttribute().getType();
 	}
 
-	private Field getFieldAttribute() {
+	protected Field getFieldAttribute() {
 		FormTag p = getFormTag();
 		return ReflectionUtil.getField(p.getDto(), getAttribute());
 	}

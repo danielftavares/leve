@@ -3,7 +3,7 @@
 	<l:header />
 	<l:form dto="org.leve.vbg.beans.common.CityFindDto" action="/city/list" id="find" >
 		<l:input attribute="name"/>
-		<l:lookup attribute="state" />
+		<l:select attribute="state" />
 	</l:form>
 	<l:table formId="find">
 		<l:collumn label="name" attribute="name" width="40" />

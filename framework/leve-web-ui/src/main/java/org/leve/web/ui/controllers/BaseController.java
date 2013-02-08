@@ -18,7 +18,7 @@ import org.leve.ejb.BaseBusinessBean;
 public abstract class BaseController<T, F> {
 	
 	
-	@POST()
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public T save(T bean) {
@@ -26,11 +26,18 @@ public abstract class BaseController<T, F> {
 	}
 	
 	@Path("/list")
-	@POST()
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public PaginatedList<T> list(BaseFindDto<F> findDto) {
 		return getBussinesBean().listPaginated(findDto);
+	}
+	
+	@Path("/list")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<T> list() {
+		return getBussinesBean().list();
 	}
 	
 	@GET
