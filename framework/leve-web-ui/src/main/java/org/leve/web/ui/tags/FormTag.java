@@ -168,6 +168,7 @@ public class FormTag extends LeveBaseTag {
 			print(out, getMessage(btInf[0]));
 			printEndTag(out, HTML_TAG_BUTTON);
 		}
+		
 		printEndTag(out, HTML_TAG_DIV);
 	}
 

@@ -125,15 +125,15 @@ public class LookUpTag extends InputTag {
 	}
 
 
-	private String getBaseFindUrl() {
+	protected String getBaseFindUrl() {
 		return getBaseLookupUrl().replace("{action}", "Find");
 	}
 	
-	private String getBaseCadUrl() {
+	protected String getBaseCadUrl() {
 		return getBaseLookupUrl().replace("{action}", "Cad");
 	}
 	
-	private String getBaseLookupUrl() {
+	protected String getBaseLookupUrl() {
 		return getAttrPackge() +"/"+ getKeyFieldAction()+"/"+ getKeyFieldAction()+"{action}.jsp";
 	}
 

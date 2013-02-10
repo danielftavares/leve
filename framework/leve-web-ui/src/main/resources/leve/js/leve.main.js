@@ -4,6 +4,7 @@ Leve = {
 	FT_CAD : 1,
 	FT_FIND: 2,
 	FT_LOOKUP: 3,
+	FT_GOTO: 4, 
 	openFrame: function(url, frame_type, options){
 		options = options || {data: null, 
 								load_callback_function: null, // callback -> excute after page load 
@@ -167,6 +168,9 @@ Leve = {
 	},
 	openLookup: function(url,frame_id){
 		Leve.openFrame(url, Leve.FT_LOOKUP,{parent: frame_id});
+	},
+	open_goto: function(url, id, frame_id){
+		Leve.openFrame(url, Leve.FT_GOTO,{parent: frame_id, data: id});
 	},
 	
 	get_top_frame: function(){

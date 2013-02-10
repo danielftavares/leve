@@ -182,4 +182,20 @@
    <type>java.lang.String</type>
   </attribute>
  </tag>
+ <tag>
+  <name>goTo</name>
+  <tag-class>org.leve.web.ui.tags.GoToTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>attribute</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>label</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
 </taglib>

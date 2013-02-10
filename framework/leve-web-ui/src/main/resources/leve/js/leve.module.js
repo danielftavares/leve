@@ -2,27 +2,33 @@ $(function() {
 	Leve = window.parent.Leve;
 
 	LeveModule = {
+		frameId: $(document).getUrlParam("frame_id"), 
 		submitForm : function(f) {
 			// alert('Error! implement LeveModule.submitForm in your page');
 		},
 		loadModule : function(obj) {
 			if (obj) {
-				if ($.type(obj) == 'object') {
-					var id_obj = obj[$('form.leve_module_form').data(
-							"id-property")];
-
-					$.getJSON($('form.leve_module_form').attr("action") + "/"
-							+ id_obj, function(data) {
-						if (!reciveError(data)) {
-							if (LeveModule.frame_type == Leve.FT_LOOKUP) {
-								Leve.return_value(data);
-							} else {
-								js2form($('form')[0], data);
-								$('.leve-decimal').maskMoney('mask');
-							}
+				
+				var loadFinction = function(data) {
+					if (!reciveError(data)) {
+						if (LeveModule.frame_type == Leve.FT_LOOKUP) {
+							Leve.return_value(data);
+						} else {
+							js2form($('form')[0], data);
+							$('.leve-decimal').maskMoney('mask');
 						}
-					});
+					}
 				}
+				
+				var id_obj = null;
+				if ($.type(obj) == 'object') {
+					id_obj = obj[$('form.leve_module_form').data(
+							"id-property")];
+				}else {
+					id_obj = obj;
+				}
+				$.getJSON($('form.leve_module_form').attr("action") + "/"
+						+ id_obj, loadFinction);
 				// alert('Error! implement LeveModule.openModule in your page');
 			} else {
 				$('form.leve_module_form').each(function() {
@@ -69,11 +75,11 @@ $(function() {
 	});
 
 	$("#new").click(function() {
-		if (LeveModule.frame_type == Leve.FT_CAD) {
-			LeveModule.loadModule();
-		} else if (LeveModule.frame_type == Leve.FT_FIND) {
+		if (LeveModule.frame_type == Leve.FT_FIND) {
 			Leve.removeFrame();
 			Leve.get_top_frame().el[0].contentWindow.LeveModule.loadModule();
+		} else {
+			LeveModule.loadModule();
 		}
 
 	});
@@ -84,7 +90,7 @@ $(function() {
 		LeveModule.remove();
 	});
 	$(".leve-command-bar #find").click(function() {
-		Leve.find($(document).getUrlParam("frame_id"));
+		Leve.find(LeveModule.frameId);
 	});
 
 	$(".leve-action-bar #find").click(function() {
@@ -128,7 +134,7 @@ $(function() {
 				var url = $(this).parents('div.leve-lookup').data('find-url');
 				LeveModule.lookup_return = window[$(this).parents(
 						'div.leve-lookup').data('function-fill')];
-				Leve.openLookup(url, $(document).getUrlParam("frame_id"));
+				Leve.openLookup(url, LeveModule.frameId);
 				return false;
 			});
 
@@ -137,7 +143,7 @@ $(function() {
 				var url = $(this).parents('.leve-lookup').data('cad-url');
 				LeveModule.lookup_return = window[$(this).parents(
 						'div.leve-lookup').data('function-fill')];
-				Leve.openLookup(url, $(document).getUrlParam("frame_id"));
+				Leve.openLookup(url, LeveModule.frameId);
 				return false;
 			});
 
@@ -153,6 +159,24 @@ $(function() {
 	});
 
 	$('.datepicker').datepicker();
+	
+	// mount goto
+	var listgoto = $('form .leve-goto-item').detach();
+	if(listgoto.length){
+		var btnGroup = $('.leve-command-bar').append('<button class="btn dropdown-toggle" data-toggle="dropdown">'+gotoLabel+' <span class="caret"></span></button><ul class="dropdown-menu"></ul>');
+		btnGroup.find('ul').append(listgoto);
+		listgoto.each(function(){
+			$(this).find('a').click(function(){
+				var url = $(this).data('page');
+				var idVal = $(document.getElementById( $(this).data('id'))).val();
+				if(idVal){
+					Leve.open_goto(url, idVal, LeveModule.frameId);
+				} else {
+					console.log('no data!!');
+				}
+			});
+		});
+	}
 
 });
 function loadTable(table, data) {

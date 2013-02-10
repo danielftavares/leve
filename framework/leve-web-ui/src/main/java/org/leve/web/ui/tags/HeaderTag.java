@@ -33,6 +33,7 @@ public class HeaderTag extends LeveBaseTag {
 
 		print(out, "<script type=\"text/javascript\" >var servlet_path = \""
 				+ pageContext.getServletContext().getContextPath() + "\";" +
+				"var gotoLabel = '"+getMessage("goto")+"';" +
 				// conffigura internacionalizacao
 				"var locale_decimal = '"+ symbols.getMonetaryDecimalSeparator() + "';"+ 
 				"var locale_thousands = '" + symbols.getGroupingSeparator() + "'; "+
