@@ -36,6 +36,12 @@ public class InputTag extends LeveBaseTag {
 	protected String writeBeforeBody() {
 		StringBuilder out = new StringBuilder();
 
+		getInput().print(out);
+
+		return out.toString();
+	}
+
+	protected AbstractHtmlElement getInput() {
 		AbstractHtmlElement root = new DivHtmlElement("control-group");
 
 		root.addChild(getLabelElement());
@@ -46,9 +52,7 @@ public class InputTag extends LeveBaseTag {
 			root.addChild(getScriptBigDecimal());
 		}
 
-		root.print(out);
-
-		return out.toString();
+		return root;
 	}
 
 	private AbstractHtmlElement getScriptBigDecimal() {
@@ -64,6 +68,15 @@ public class InputTag extends LeveBaseTag {
 	@Override
 	protected String writeAfterBody() {
 		return NULL_RETURN;
+	}
+	
+	@Override
+	public void release() {
+		super.release();
+		attribute = null;
+		label  = null;
+		uppercase = true;
+		disabled = false;
 	}
 
 	private AbstractHtmlElement getLabelElement() {
@@ -88,11 +101,7 @@ public class InputTag extends LeveBaseTag {
 		return  ReflectionUtil.getAnnotationField(getFieldAttribute(), annotation);
 	}
 
-	protected FormTag getFormTag() {
-		FormTag p = (FormTag) getParent();
-		return p;
-	}
-	
+
 	protected String getIdFieldManyToOne() {
 		Field f = getFieldAttribute();
 		return ReflectionUtil.getFieldWithAnnotation(f.getType(), Id.class).getName();
@@ -215,7 +224,7 @@ public class InputTag extends LeveBaseTag {
 	}
 
 	protected Field getFieldAttribute() {
-		FormTag p = getFormTag();
+		FormContainerAbstractTag p = getFormTag();
 		return ReflectionUtil.getField(p.getDto(), getAttribute());
 	}
 

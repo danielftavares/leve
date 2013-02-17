@@ -27,6 +27,17 @@
  <tag>
   <name>header</name>
   <tag-class>org.leve.web.ui.tags.HeaderTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>commandBar</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>actionBar</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
  </tag>
  <tag>
   <name>form</name>
@@ -46,16 +57,6 @@
   </attribute>
   <attribute>
    <name>callBack</name>
-   <rtexprvalue>false</rtexprvalue>
-   <type>java.lang.String</type>
-  </attribute>
-  <attribute>
-   <name>commandBar</name>
-   <rtexprvalue>false</rtexprvalue>
-   <type>java.lang.String</type>
-  </attribute>
-  <attribute>
-   <name>actionBar</name>
    <rtexprvalue>false</rtexprvalue>
    <type>java.lang.String</type>
   </attribute>
@@ -102,7 +103,13 @@
   <tag-class>org.leve.web.ui.tags.TableTag</tag-class>
   <body-content>JSP</body-content>
   <attribute>
-   <name>formId</name>
+   <name>listAction</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>dto</name>
+   <required>true</required>
    <rtexprvalue>false</rtexprvalue>
    <type>java.lang.String</type>
   </attribute>
@@ -110,7 +117,7 @@
  <tag>
   <name>collumn</name>
   <tag-class>org.leve.web.ui.tags.CollumnTag</tag-class>
-  <body-content>empty</body-content>
+  <body-content>JSP</body-content>
   <attribute>
    <name>attribute</name>
    <required>true</required>
@@ -128,6 +135,12 @@
    <required>true</required>
    <rtexprvalue>false</rtexprvalue>
    <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <name>filtrable</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Boolean</type>
+   <description>default= true</description>
   </attribute>
  </tag>
  <tag>
@@ -183,6 +196,34 @@
   </attribute>
  </tag>
  <tag>
+  <name>selectManyToMany</name>
+  <tag-class>org.leve.web.ui.tags.SelectManyToManyTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>attribute</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>rightAttribute</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>leftAttribute</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>label</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
   <name>goTo</name>
   <tag-class>org.leve.web.ui.tags.GoToTag</tag-class>
   <body-content>empty</body-content>
@@ -197,5 +238,10 @@
    <rtexprvalue>false</rtexprvalue>
    <type>java.lang.String</type>
   </attribute>
+ </tag>
+ <tag>
+  <name>filter</name>
+  <tag-class>org.leve.web.ui.tags.FilterTag</tag-class>
+  <body-content>JSP</body-content>
  </tag>
 </taglib>

@@ -5,5 +5,6 @@
 		<l:input attribute="key" disabled="true"/>
 		<l:input attribute="name" uppercase="false"/>
 		<l:input attribute="password" uppercase="false"/>
+		<l:selectManyToMany attribute="groups" rightAttribute="user"  leftAttribute="group"/>
 	</l:form>
 </l:page>

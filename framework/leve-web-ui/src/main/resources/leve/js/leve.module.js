@@ -7,8 +7,13 @@ $(function() {
 			// alert('Error! implement LeveModule.submitForm in your page');
 		},
 		loadModule : function(obj) {
+			// clear many to many
+			$('.leve-select-many .leve-select-right button').each(function(){
+				var opts = $(this).parents('.leve-select-right').find('select option').remove();
+				$(this).parents('.leve-select-many').find('.leve-select-left select').append(opts);
+			});
+			
 			if (obj) {
-				
 				var loadFinction = function(data) {
 					if (!reciveError(data)) {
 						if (LeveModule.frame_type == Leve.FT_LOOKUP) {
@@ -92,10 +97,7 @@ $(function() {
 	$(".leve-command-bar #find").click(function() {
 		Leve.find(LeveModule.frameId);
 	});
-
-	$(".leve-action-bar #find").click(function() {
-		$('.datagrid .search').click();
-	});
+	
 	$("#close").click(function() {
 		Leve.removeFrame();
 	});
@@ -147,20 +149,39 @@ $(function() {
 				return false;
 			});
 
-	// load select
-	$('select.leve-select-bean').each(function() {
-		var select = $(this);
-		var action = select.data('bean-action');
-		$.getJSON(servlet_path + "/leve/" + action + "/list", function(resp) {
-			$(resp).each(function(){
-				select.append($('<option>', { value : this[select.data('bean-id')] }).text(this[select.data('bean-desc')]));
-			});
-		});
-	});
-
 	$('.datepicker').datepicker();
 	
-	// mount goto
+	
+	//grid start
+	$('.leve-tablecolldef').each(function(){
+		var $el = $(this).detach();
+		$el.appendTo('#leve-findmodal_' + $el.data('tableid') +' .modal-body');
+	});
+	
+	$('.leve-modalfind .leve-filter').click(function(){
+		$('#'+$(this).data('tableid') + ' .search').click();
+		$(this).prev().click();
+	});
+	
+	//grid end
+	
+	
+	//many to many start
+	//add
+	$('.leve-select-many .leve-select-left button').click(function(){
+		var opts = $(this).parents('.leve-select-left').find('select option:selected').remove();
+		$(this).parents('.leve-select-many').find('.leve-select-right select').append(opts);
+		return false;
+	});
+	//remove
+	$('.leve-select-many .leve-select-right button').click(function(){
+		var opts = $(this).parents('.leve-select-right').find('select option:selected').remove();
+		$(this).parents('.leve-select-many').find('.leve-select-left select').append(opts);
+		return false;
+	});
+	//many to many end
+	
+	// mount goto start
 	var listgoto = $('form .leve-goto-item').detach();
 	if(listgoto.length){
 		var btnGroup = $('.leve-command-bar').append('<button class="btn dropdown-toggle" data-toggle="dropdown">'+gotoLabel+' <span class="caret"></span></button><ul class="dropdown-menu"></ul>');
@@ -168,7 +189,7 @@ $(function() {
 		listgoto.each(function(){
 			$(this).find('a').click(function(){
 				var url = $(this).data('page');
-				var idVal = $(document.getElementById( $(this).data('id'))).val();
+				var idVal = $(document.getElementById($(this).data('id'))).val();
 				if(idVal){
 					Leve.open_goto(url, idVal, LeveModule.frameId);
 				} else {
@@ -177,6 +198,7 @@ $(function() {
 			});
 		});
 	}
+	// mount goto end
 
 });
 function loadTable(table, data) {

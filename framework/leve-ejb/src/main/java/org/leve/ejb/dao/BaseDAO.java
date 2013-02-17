@@ -181,18 +181,4 @@ public abstract class BaseDAO<T, F> {
 		return criteria.list(em);
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<T> list() {
-		Criteria criteria = Criteria.forClass(getPersistentClass());
-		
-		String orderAttr = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveKey.class).getName();
-		if(orderAttr == null){
-			orderAttr = ReflectionUtil.getFieldWithAnnotation(getPersistentClass(), LeveDesc.class).getName();
-		}
-		if (orderAttr != null){
-			criteria.addOrder(Order.asc(orderAttr));
-		}
-		return criteria.list(em);
-	}
-
 }

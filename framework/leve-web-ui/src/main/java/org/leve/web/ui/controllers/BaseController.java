@@ -34,13 +34,6 @@ public abstract class BaseController<T, F> {
 	}
 	
 	@GET
-	@Path("/list")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<T> list() {
-		return getBussinesBean().list();
-	}
-	
-	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	public T load(@PathParam("id") Long id){

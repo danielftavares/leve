@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -16,6 +18,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.leve.bundles.ResourceBundleFactory;
+import org.leve.ejb.UiBean;
 import org.leve.web.ui.servlets.LeveTagResourcesServlet;
 
 @SuppressWarnings("serial")
@@ -23,6 +26,11 @@ public abstract class LeveBaseTag extends BodyTagSupport implements Cloneable {
 	
 	@Inject 
 	private ResourceBundleFactory bundleFactory;
+	
+	@EJB
+	protected UiBean uiBean;
+	
+	protected static final Logger LOGGER = Logger.getLogger(LeveBaseTag.class.getName());
 	
 	private static final Calendar startDate = Calendar.getInstance();
 	
@@ -180,6 +188,15 @@ public abstract class LeveBaseTag extends BodyTagSupport implements Cloneable {
    	public long getPreventCacheAppender() {
    		return startDate.getTimeInMillis();
 	}
+   	
+	protected FormContainerAbstractTag getFormTag() {
+		LeveBaseTag tag = this;
+		do {
+			tag = (LeveBaseTag) tag.getParent();
+		} while ( !(tag instanceof FormContainerAbstractTag));
+		return (FormContainerAbstractTag) tag;
+	}
+	
 
    	protected String getDateFormatMaskRequestLocale(){
    		return getDateFormatRequestLocale().replaceAll("m", "9").replaceAll("y", "9").replaceAll("d", "9");// MONTH
@@ -218,6 +235,10 @@ public abstract class LeveBaseTag extends BodyTagSupport implements Cloneable {
 	
 	protected boolean isLookUpPage(){
 		return getFrameType() == FRAME_TYPE_LOOKUP;
+	}
+	
+	protected String getJaxPath() {
+		return pageContext.getServletContext().getContextPath() + "/leve";
 	}
 	
 	private String generateId(){

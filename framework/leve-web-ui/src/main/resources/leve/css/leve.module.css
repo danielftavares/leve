@@ -31,10 +31,24 @@ form.module_find_container{
 	margin-bottom: 10px;
 }
 
-.fuelux .datagrid{
-	margin-bottom: 0px;
-	height: 285px;
+.leve-grid{
+	height: 410px;
+	padding: 10px 0px 0px;
 }
+
+.leve-grid .table{
+	margin-bottom: 0px;
+}
+
+.leve-grid th>a{
+	float: right;
+	cursor: pointer;
+}
+
+.leve-grid th>.icon-filter:hover {
+	background-color: rgba(100,100,100,.25);
+}
+	
 
 .fuelux .datagrid tfoot .datagrid-footer-right .grid-pager > button {
 	top: 0px;

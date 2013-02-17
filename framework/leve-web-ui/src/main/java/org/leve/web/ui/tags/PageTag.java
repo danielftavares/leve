@@ -22,6 +22,10 @@ public class PageTag extends LeveBaseTag {
 	@Override
 	protected String writeAfterBody(){
 		StringBuilder out = new StringBuilder();
+		if(isModule()){
+			printEndTag(out, HTML_TAG_DIV); // "class","container-fluid" // view header
+		}
+		
 		printEndTag(out, HTML_TAG_BODY);
 		printEndTag(out, HTML_TAG_HTML);
 		return out.toString();

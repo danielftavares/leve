@@ -11,16 +11,9 @@ public class LabelHtmlElement extends AbstractHtmlElement {
 		this.label = label;
 	}
 	
-	public LabelHtmlElement(String styleClass, String style) {
-		super(styleClass, style, null);
-	}
-	
-	public LabelHtmlElement(String styleClass) {
-		super(styleClass, null, null);
-	}
-	
-	public LabelHtmlElement() {
+	public LabelHtmlElement(String label) {
 		super();
+		this.label = label;
 	}
 
 	protected static final String HTML_TAG_LABEL = "label";

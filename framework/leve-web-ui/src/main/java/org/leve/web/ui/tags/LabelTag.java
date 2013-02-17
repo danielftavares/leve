@@ -11,8 +11,7 @@ public class LabelTag extends LeveBaseTag {
 	protected String writeBeforeBody() {
 		StringBuilder out = new StringBuilder();
 
-		LabelHtmlElement l = new LabelHtmlElement();
-		l.setLabel(getMessage(label));
+		LabelHtmlElement l = new LabelHtmlElement(getMessage(label));
 		l.print(out);
 
 		return out.toString();

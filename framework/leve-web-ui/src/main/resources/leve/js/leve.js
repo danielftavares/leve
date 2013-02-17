@@ -28,6 +28,13 @@ Object.byString = function(o, s) {
     return o;
 }
 
+/**
+ * possibilita pesquisar usando jquery mesmo que o valor tenha pontos
+ */
+function clearDotsJquey(val){
+	return val.split('.').join('\\.');
+}
+
 function showSuccessMsg(msg){
 	if($('#leve-success').length == 0){
 		$('.leve-form-start').prepend('<div id=\'leve-success\' class="alert alert-block alert-success fade in"><a class="close" data-dismiss="alert" href="#">&times;</a><ul /></div>');

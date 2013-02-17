@@ -4,7 +4,7 @@ public class BaseFindDto<T> {
 
 	private T bean;
 
-	private Integer pageSize = 10;
+	private Integer pageSize = 50;
 	private Integer page = 0;
 
 	public T getBean() {

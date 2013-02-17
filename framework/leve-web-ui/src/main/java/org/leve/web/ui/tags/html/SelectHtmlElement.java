@@ -18,6 +18,14 @@ public class SelectHtmlElement extends AbstractHtmlElement {
 	public SelectHtmlElement() {
 		super();
 	}
+	
+	public void setSelectMany(boolean selectMany){
+		if (selectMany){
+			addCustomAttribute("multiple", "multiple");
+		} else {
+			customAttr.remove("multiple");
+		}
+	}
 
 	protected static final String HTML_TAG_SELECT = "select";
 	
