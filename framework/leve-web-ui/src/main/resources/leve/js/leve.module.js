@@ -162,7 +162,6 @@ $(function() {
 		$('#'+$(this).data('tableid') + ' .search').click();
 		$(this).prev().click();
 	});
-	
 	//grid end
 	
 	

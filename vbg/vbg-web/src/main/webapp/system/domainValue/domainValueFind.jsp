@@ -2,6 +2,7 @@
 <l:page pageType="find" title="domainValue.find">
 	<l:header />
 	<l:table dto="org.leve.beans.DomainValueFindDto" listAction="/domainValue/list">
+		<l:collumnFunction />
 		<l:collumn label="domain" attribute="domain.name" width="30">
 			<l:filter>
 				<l:lookup attribute="domain" />

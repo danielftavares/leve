@@ -30,6 +30,7 @@ public class InputHtmlElement extends AbstractHtmlElement {
 		printAttribute(sb, "class", getStyleClass());
 		printAttribute(sb, "style", getStyle());
 		printAttribute(sb, "type", getType());
+		printAttribute(sb, "autocomplete", "off");
 		for (String attr : super.customAttr.keySet()) {
 			printAttribute(sb, attr, super.customAttr.get(attr));
 		}

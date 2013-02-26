@@ -14,9 +14,9 @@ body {
 	font-size: 14px;
 }
 
-.form-horizontal input, .form-horizontal select {
-	padding: 0px;
-	font-size: 14px;
+.control-group input, .control-group select {
+	padding: 0px !important;
+	font-size: 14px !important;
 }
 
 .form-horizontal .control-group{

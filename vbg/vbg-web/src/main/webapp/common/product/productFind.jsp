@@ -2,6 +2,7 @@
 <l:page pageType="find" title="product.find">
 	<l:header />
 	<l:table dto="org.leve.vbg.beans.common.ProductFindDto" listAction="/product/list" >
+		<l:collumnFunction />
 		<l:collumn attribute="key" label="key"  width="20" />
 		<l:collumn attribute="brand.name" label="brand" width="30" >
 			<l:filter>

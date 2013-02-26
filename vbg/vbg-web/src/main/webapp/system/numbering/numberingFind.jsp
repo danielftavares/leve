@@ -2,6 +2,7 @@
 <l:page pageType="find" title="numbering.find">
 	<l:header />
 	<l:table dto="org.leve.beans.NumberingFindDto" listAction="/numbering/list" >
+		<l:collumnFunction />
 		<l:collumn label="class" attribute="clazz" width="30">
 			<l:filter>
 				<l:input attribute="clazz" label="class" uppercase="false"/>

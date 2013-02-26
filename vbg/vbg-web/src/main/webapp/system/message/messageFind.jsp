@@ -2,6 +2,7 @@
 <l:page pageType="find" title="message.find">
 	<l:header />
 	<l:table  dto="org.leve.beans.MessageFindDto" listAction="/message/list">
+		<l:collumnFunction />
 		<l:collumn label="locale" attribute="locale" width="30" >
 			<l:filter>
 				<l:select attribute="locale" />

@@ -2,6 +2,7 @@
 <l:page pageType="find" title="user.find">
 	<l:header />
 	<l:table dto="org.leve.beans.UserFindDto" listAction="/user/list">
+		<l:collumnFunction />
 		<l:collumn label="key" attribute="key" width="40">
 			<l:filter>
 				<l:input attribute="key" uppercase="false" />

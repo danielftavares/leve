@@ -60,31 +60,78 @@ $(function(){
 			this.$topheader.attr('colspan', this.columns.length);
 
 			$.each(this.columns, function (index, column) {
-				var $th = $('<th>').width(  column.width+ '%' ).data('property', column.property).text(column.label);
-				if (column.sortable) $th.addClass('sortable')
-				if(column.filtrable){
-					var $fa = $('<a href="#" >').append($('<i class="icon-filter">'))
-					$fa.popover({
-						placement: 'bottom',
-						html: true,
-						content: function(){
-							var $r = $('<span class="leve-colfilterform">');
-							
-							var $el = $('#colf-'+clearDotsJquey(column.property)).find('.control-group');
-							var $clone = $el.clone(true, true);
-						
-							$r.append($clone);
-							
-							$r.append($el.parents('.modal').find('.leve-filter').clone(true, true).on('mousedown', function(){
-								$clone.find('input, select').each(function(){
-									$el.find('#'+clearDotsJquey(this.id)).val($(this).val())
+				var $th = null;
+				if(column.funccol){
+					$th = $('<th>').width('3%' );
+				} else {
+					$th = $('<th>').width(  column.width+ '%' ).data('property', column.property).text(column.label);
+					if (column.sortable) $th.addClass('sortable')
+					if(column.filtrable){
+						var $fa = $('<a class="leve-popover" href="#" >').append($('<i class="icon-filter">'))
+						$fa.popover({
+							placement: 'bottom',
+							html: true,
+							content: function(){
+								var that = this;
+								//remove outras pop up
+								
+								var $r = $('<span class="leve-colfilterform">');
+								
+								var $el = $('#colf-'+clearDotsJquey(column.property)).find('.control-group');
+								var $clone = $el.clone(true, true);
+								
+								$r.append($clone);
+								
+								var btn = $el.parents('.modal').find('.leve-filter').clone(true, true).on('mousedown', function(){
+									$clone.find('input, select').each(function(){
+										$el.find('#'+clearDotsJquey(this.id)).val($(this).val())
+									});
 								});
-							}));
-							
-							return $r;
-						}
-					});
-					$fa.appendTo($th);
+								
+								$r.append(btn);
+								
+								$r.on('keyup', function ( e ) {
+						            if(e.which == 27){
+						            	$(that).popover('hide');
+						            } else if(e.which == 13){
+						            	btn.mousedown();
+						            	btn.click();
+						            }
+						          });
+								
+								$r.focusout(function() {
+									setTimeout(function(){
+										if(!($r.find(':focus').length)){
+											$(that).popover('hide');
+										}
+									},200);
+										
+								});
+								
+								return $r;
+							}
+						});
+						$fa.on('shown', function(){
+							var table = $fa.parents('table:first');
+							var popober = table.find('.popover:visible');
+							if(popober.position()){
+								// controla posicionamento
+								if( (popober.position().left + popober.width()) > (table.position().left + table.width()) ){
+									var delta = (popober.position().left + popober.width()) - (table.position().left + table.width());
+									var arrow = popober.find('.arrow');
+									popober.css('left', (popober.position().left - delta)+'px');
+									var newArrowPos = arrow.position().left + delta - 11;
+									if(newArrowPos < popober.width()){
+										arrow.css('left', newArrowPos+'px');
+									}
+								}
+								// foca
+								$('.control-label:visible:first').click();
+							}
+						});
+//						$fa.on('hidden', function(){alert(2)}); dispara varias vezes pq dispara mesmo que o elemente ja esteja esconfido. toodoo
+						$fa.appendTo($th);
+					}
 				}
 				
 				self.$colheader.append($th);
@@ -148,8 +195,30 @@ $(function(){
 					$.each(data.data, function (index, row) {
 						var rowEl = $('<tr />')
 						$.each(self.columns, function (index, column) {
-							var colEl = $('<td>' + Object.byString(row, column.property) + '</td>').width(  column.width+ '%' )
-							rowEl.append(colEl);
+							//coluna de botao
+							if(column.funccol){
+								var btn = $('<button />',{
+									'class' : 'btn btn-mini',
+									'type' : 'button'
+								});
+								btn.click(function(){
+									var fvals = column.funccol.split('\.');
+									var f = window;
+									var fcalo = window;
+									for(var i = 0; i < fvals.length ; i++){
+										if(i > 0){
+											fcalo = f;
+										}
+										f = f[fvals[i]];
+									}
+									f.call(fcalo, row);
+								});
+								btn.append('<i class="'+column.icon+'"></i>');
+								$('<td />').width('3%').appendTo(rowEl).append(btn);
+							} else {
+								var colEl = $('<td>' + Object.byString(row, column.property) + '</td>').width(  column.width+ '%' )
+								rowEl.append(colEl);
+							}
 						});
 						self.$tbody.append(rowEl);
 					});

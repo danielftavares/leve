@@ -2,6 +2,7 @@
 <l:page pageType="find" title="city.find">
 	<l:header />
 	<l:table dto="org.leve.vbg.beans.common.CityFindDto" listAction="/city/list" >
+		<l:collumnFunction />
 		<l:collumn label="name" attribute="name" width="40" />
 		<l:collumn label="state" attribute="state.name" width="30">
 			<l:filter>

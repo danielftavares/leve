@@ -57,7 +57,7 @@ form.module_find_container{
 	top: 0px;
 }
 
-.fuelux .datagrid select{
+.fuelux .datagrid .grid-pager select{
 	width: 80px;
 }
 
@@ -110,13 +110,18 @@ div.input-append {
 .datepicker input{
 	width: 177px;
 }
-select {
-	height: 25px;
-	width: 207px;
-	line-height: 20px;
+.control-group select {
+	height: 25px !important;
+	width: 207px !important;
+	line-height: 20px !important;
 }
 .breadcrumb{
 	margin: 0;
 	padding-top: 3px;
 	padding-bottom: 5px;
+}
+.popover {
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	border-radius: 0px !important;
 }
