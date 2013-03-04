@@ -259,4 +259,21 @@
    <type>java.lang.String</type>
   </attribute>
  </tag>
+ <tag>
+  <name>formColDef</name>
+  <tag-class>org.leve.web.ui.tags.FormColDefTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>cols</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Integer</type>
+   <description>desfault = 2.
+collumn number</description>
+  </attribute>
+ </tag>
+ <tag>
+  <name>formLine</name>
+  <tag-class>org.leve.web.ui.tags.FormLineTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
 </taglib>

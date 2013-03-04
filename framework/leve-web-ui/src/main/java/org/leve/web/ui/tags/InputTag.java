@@ -42,7 +42,7 @@ public class InputTag extends LeveBaseTag {
 	}
 
 	protected AbstractHtmlElement getInput() {
-		AbstractHtmlElement root = new DivHtmlElement("control-group");
+		AbstractHtmlElement root = new DivHtmlElement(getFormCellClass());
 
 		root.addChild(getLabelElement());
 
@@ -245,6 +245,40 @@ public class InputTag extends LeveBaseTag {
 			}
 		}
 		return null;
+	}
+	
+	protected String getFormCellClass(){
+		String formCellClass = "control-group";
+		FormColDefTag formColDefTag = getformColDefTag();
+		if(formColDefTag != null){
+			switch (formColDefTag.getCols()) {
+			case 1:
+				formCellClass += " span12";
+				break;
+			case 2:
+				formCellClass += " span6";
+				break;
+			case 3:
+				formCellClass += " span4";
+				break;
+			case 4:
+				formCellClass += " span3";
+				break;
+				
+			default:
+				throw new RuntimeException("Invalid number of collumn");
+			}
+		}
+		
+		return formCellClass;
+	}
+	
+	protected FormColDefTag getformColDefTag() {
+		LeveBaseTag tag = this;
+		do {
+			tag = (LeveBaseTag) tag.getParent();
+		} while ( !(tag instanceof FormColDefTag) && tag != null);
+		return (FormColDefTag) tag;
 	}
 
 	public static int roundUp(int dividend, int divisor) {

@@ -31,7 +31,7 @@ public class FormTag extends FormContainerAbstractTag {
 
 		printStartTag(out, HTML_TAG_DIV, "class", "row-fluid");
 
-		printStartTag(out, HTML_TAG_DIV, "class", "span12 leve-form-start");
+		printStartTag(out, HTML_TAG_DIV, "class", "leve-form-start");
 
 		return out.toString();
 	}

@@ -12,16 +12,6 @@ import org.leve.web.ui.tags.html.LabelHtmlElement;
 import org.leve.web.ui.tags.html.ScriptHtmlElement;
 
 /**
- * 		<div class="control-group leve-lookup">
-			<label class="control-label" for="name">Nome</label>
-			<div class="controls input-append">
-				<input class="leve-lookup-key" type="text">
-				<input type="text" class="leve-uppercase leve-lookup-desc">
-				<button type="submit" class="btn"><i class="icon-search"></i></button>
-				<button type="submit" class="btn"><i class="icon-file"></i></button>
-			</div>
-		</div>
-
  * 
  * @author daniel
  *
@@ -36,17 +26,23 @@ public class LookUpTag extends InputTag {
 		String fieldKey = getKeyManyToOned();
 		String fieldDesc = getDescManyToOne();
 		String fieldId = getIdFieldManyToOne();
-		String filedAction = getKeyFieldAction();
 		
 		String firstField = fieldKey;
 		if(firstField == null){
 			firstField = fieldDesc;
 		}
 		
-		DivHtmlElement root = new DivHtmlElement("control-group leve-lookup", null, getId());
+		DivHtmlElement root = new DivHtmlElement(getFormCellClass() + " leve-lookup", null, getId());
 		root.addCustomAttribute("data-cad-url", getBaseCadUrl());
 		root.addCustomAttribute("data-find-url", getBaseFindUrl());
+		root.addCustomAttribute("data-find-key-url", getFindByKeyUrl());
+		root.addCustomAttribute("data-autocomplete-url", getAutocompleteUrl());
 		root.addCustomAttribute("data-function-fill", "fill_lookup_"+getAttribute());
+		root.addCustomAttribute("data-field-desc", fieldDesc);
+		if (fieldKey != null){
+			root.addCustomAttribute("data-field-key", fieldKey);
+		}
+		
 		root.addChild(new InputHtmlElement("leve-lookup-id", null, getAttribute()+"."+fieldId, "hidden"));
 		
 		root.addChild(new LabelHtmlElement("control-label", null, null,  getAttribute()+"."+firstField, getMessage(resolveLabel())));
@@ -73,39 +69,7 @@ public class LookUpTag extends InputTag {
 							"$('div#"+getId()+" .leve-lookup-desc').val('');" +
 							"$('div#"+getId()+" .leve-lookup-id').val('');" +
 						"}"+
-					"};" +
-				"$(function() {" +
-					
-					
-					//evento para o key
-					"$('div#"+getId()+" .leve-lookup-key').blur(function() {" +
-							"Leve.completeByKey(this, '"+getFormTag().getJaxPath()+"/"+filedAction+"/key/', fill_lookup_"+getAttribute()+" );" +
-						"});" +
-
-					"$('div#"+getId()+" .leve-lookup-desc').typeahead({"+
-					    "items: 10," +
-					    "highlighter : function(item){" +
-					      "var itemVal = $.parseJSON(item);"+	
-					      "var query = this.query.replace(/[\\-\\[\\]{}()*+?.,\\\\\\^$|#\\s]/g, '\\$&');"+
-					      "return ("+getItemLabel(fieldKey, fieldDesc)+").replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {"+
-					      "  return '<strong>' + match + '</strong>';"+
-					      "})"+
-					    "}," +
-					    "matcher: function (item) {return 1;}," +
-					    "sorter: function (items) {return items}," +
-					    "updater: function (item) { var data = $.parseJSON(item); fill_lookup_"+getAttribute()+"(data); return data."+fieldDesc+" } , " +
-					    "source: function (query, callback) {"+
-					    "    return $.getJSON('"+getFormTag().getJaxPath()+"/"+filedAction+"/autocomplete?desc='+query, function (data) {" +
-					    		"var return_list = [];" +
-					    		"$.each(data, function(key, val) {" +
-					    			"return_list.push( $.stringifyJSON(val) );"+
-					    		"});"+
-					    "        return callback(return_list);"+
-					    "    });"+
-					    "}" +
-					"});" +
-					
-				"});";
+					"};";
 		
 		root.addChild(new ScriptHtmlElement(script));
 		
@@ -116,12 +80,12 @@ public class LookUpTag extends InputTag {
 	}
 
 
-	private String getItemLabel(String fieldKey, String fieldDesc) {
-		if (fieldKey != null){
-			return "itemVal."+fieldKey+"+ '-' +itemVal."+fieldDesc;
-		} else {
-			return "itemVal."+fieldDesc;
-		}
+	private String getFindByKeyUrl() {
+		return getFormTag().getJaxPath()+"/"+getKeyFieldAction()+"/key/";
+	}
+	
+	private String getAutocompleteUrl() {
+		return getFormTag().getJaxPath()+"/"+getKeyFieldAction()+"/autocomplete";
 	}
 
 

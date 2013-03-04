@@ -125,3 +125,11 @@ div.input-append {
 	-moz-border-radius: 0px !important;
 	border-radius: 0px !important;
 }
+.blockMsg{
+	background: url(ajax-loader.gif) no-repeat;
+}
+
+.row-fluid [class*="span"] {
+	margin-left: 0;
+	min-height: 20px;
+}

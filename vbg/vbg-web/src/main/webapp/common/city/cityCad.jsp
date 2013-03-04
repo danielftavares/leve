@@ -4,7 +4,11 @@
 	<l:form dto="org.leve.vbg.beans.common.City" action="/city" >
 		<l:goTo attribute="state"/>
 		
-		<l:input attribute="name"/>
-		<l:select attribute="state"/>
+		<l:formColDef>
+			<l:formLine>
+				<l:input attribute="name"/>
+				<l:select attribute="state"/>
+			</l:formLine>
+		</l:formColDef>
 	</l:form>
 </l:page>

@@ -148,6 +148,58 @@ $(function() {
 				Leve.openLookup(url, LeveModule.frameId);
 				return false;
 			});
+	
+	
+	
+	//evento para o key
+	$('.leve-lookup .leve-lookup-key').blur(function() {
+		var $divLookup = $(this).parents('.leve-lookup:first');
+		Leve.completeByKey(this, $divLookup.data('find-key-url'), window[$divLookup.data('function-fill')]);
+	});
+	
+	
+
+	$('.leve-lookup .leve-lookup-desc').typeahead({
+	    items: 10,
+	    highlighter : function(item){
+	      var itemVal = $.parseJSON(item);
+	      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\$&');
+	      
+	      var $divLookup =  this.$element.parents('.leve-lookup:first');
+	      
+	      var key_att = $divLookup.data('field-key');
+	      var desc_att = $divLookup.data('field-desc');
+	      
+	      var key_val = key_att ? itemVal[key_att] : null;
+	      var desc_val = itemVal[desc_att];
+	      var label = key_val;
+	      label = label ? label + ' - ' + desc_val : desc_val;
+	      return ( label ).replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+	        return '<strong>' + match + '</strong>';
+	      })
+	    },
+	    matcher: function (item) {return 1;},
+	    sorter: function (items) {return items},
+	    updater: function (item) { 
+	    	var data = $.parseJSON(item);
+	    	
+	    	var $divLookup =  this.$element.parents('.leve-lookup:first');
+	    	window[$divLookup.data('function-fill')](data)
+	    	return data[$divLookup.data('field-desc')]; 
+	    }, 
+	    source: function (query, callback) {
+	    	var $divLookup = this.$element.parents('.leve-lookup:first');
+	    	
+	    	//use jquery parent window. cant block ui
+	        return window.parent.$.getJSON($divLookup.data('autocomplete-url')+'?desc='+query, function (data) {
+	    		var return_list = [];
+	    		$.each(data, function(key, val) {
+	    			return_list.push( $.stringifyJSON(val) );
+	    		});
+	            return callback(return_list);
+	        });
+	    }
+	});
 
 	$('.datepicker').datepicker();
 	
@@ -198,6 +250,33 @@ $(function() {
 		});
 	}
 	// mount goto end
+	
+	//block ajax
+	
+	$(document).ajaxStart(function(a,b,c,d){
+		$.blockUI({ message: " ",
+			css: {
+				padding:	0,
+				margin:		0,
+				width:		'16px',
+				height:		'16px',
+				top:		'40%',
+				left:		'35%',
+				textAlign:	'center',
+				cursor:		'wait',
+				border:		'none',
+				backgroundColor:'none',
+			},
+			overlayCSS:  {
+				backgroundColor:	'#fff',
+				opacity:			0.6,
+				cursor:				'wait'
+			}
+		});
+	});
+	
+	$(document).ajaxStop($.unblockUI);
+	//end block ajax
 
 });
 function loadTable(table, data) {

@@ -66,6 +66,10 @@ public class HeaderTag extends LeveBaseTag {
 
 		printImportScript(out, "jquery/jquery.getUrlParam.js");
 		printImportScript(out, "jquery/jquery.stringifyjson.js");
+		
+		if (getPage().isModule()) {
+			printImportScript(out, "jquery/jquery.blockUI.js");
+		}
 	}
 
 	private void printImportBootstrap(StringBuilder out) {
