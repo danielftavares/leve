@@ -40,7 +40,7 @@ form.module_find_container{
 	margin-bottom: 0px;
 }
 
-.leve-grid th>a{
+.leve-grid th>span{
 	float: right;
 	cursor: pointer;
 }
@@ -79,17 +79,40 @@ form.module_find_container{
 	text-align: center !important;
 }
 
+.leve-grid .table-bordered thead:last-child tr:last-child > th:first-child{
+	border-bottom-left-radius: 0;
+}
+
+.leve-grid .table-bordered thead:last-child tr:last-child > th:last-child{
+	border-bottom-right-radius: 0;
+}
+
 /*lookup*/
 div.input-append {
 	display: inherit !important;
 	
 }
+
+.controls select, .controls input{
+	width: 80%;
+}
 .leve-lookup input.leve-lookup-key{
-	width: 80px;
+	width: 20%;
 }
 .leve-lookup input.leve-lookup-desc{
 	border-radius: 0px;
-	width: 70px;
+	width: 50%;
+}
+
+.leve-colfilterform .controls select,.leve-colfilterform .controls input{
+	width: 100%;
+}
+.leve-colfilterform .leve-lookup input.leve-lookup-key{
+	width: 25%;
+}
+.leve-colfilterform .leve-lookup input.leve-lookup-desc{
+	border-radius: 0px;
+	width: 55%;
 }
 
 .leve-lookup input.leve-field-alone{
@@ -101,7 +124,15 @@ div.input-append {
 }
 
 .leve-lookup button.btn, div.datepicker span.add-on{
-	padding: 0px 6px
+	padding: 0px 6px;
+}
+
+.input-append p, .input-prepend p{
+	font-size: 14px;
+}
+
+.leve-col-btn{
+	cursor: pointer;
 }
 
 .datepicker {
@@ -112,7 +143,6 @@ div.input-append {
 }
 .control-group select {
 	height: 25px !important;
-	width: 207px !important;
 	line-height: 20px !important;
 }
 .breadcrumb{

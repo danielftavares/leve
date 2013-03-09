@@ -1,14 +1,14 @@
 package org.leve.web.ui.servlets;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,64 +18,92 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/levetag-resources/*")
 public class LeveTagResourcesServlet extends HttpServlet {
 
+	private static final Calendar startDate = Calendar.getInstance();
+	private int maxAge = 31556926;
+	private long milliseconds = 1000L;
+	
+	private static final Map<String, String> mimeTypes = new HashMap<String, String>();
+	{
+		mimeTypes.put("css", "text/css");
+		mimeTypes.put("less", "text/css");
+		mimeTypes.put("html", "text/html");
+		mimeTypes.put("htm", "text/html");
+		mimeTypes.put("js", "text/javascript");
+		mimeTypes.put("txt", "text/plain");
+		mimeTypes.put("xml", "text/xml");
+		mimeTypes.put("gif", "image/gif");
+		mimeTypes.put("ico", "image/x-icon");
+		mimeTypes.put("jpeg", "image/jpeg");
+		mimeTypes.put("jpg", "image/jpeg");
+		mimeTypes.put("png", "image/png");
+		mimeTypes.put("svg", "image/svg+xml");
+
+		mimeTypes.put("oga", "audio/ogg");
+		mimeTypes.put("ogg", "audio/ogg");
+		mimeTypes.put("ogv", "video/ogg");
+		mimeTypes.put("mp4", "video/mp4");
+		mimeTypes.put("webm", "video/webm");
+
+		mimeTypes.put("ttf", "font/truetype");
+		mimeTypes.put("otf", "font/opentype");
+		mimeTypes.put("eot", "application/vnd.ms-fontobject");
+		mimeTypes.put("woff", "application/x-font-woff");
+	}
+
+	
 	public static final String RESOURCE_SERVLET_URI = "levetag-resources";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		InputStream is = this.getClass().getClassLoader()
-				.getResourceAsStream(request.getPathInfo().substring(1));
 		
-		if (is != null) {
-			if (request.getPathInfo().endsWith(".js") || request.getPathInfo().endsWith(".css")) {
-				if (request.getPathInfo().endsWith(".js")) {
-					response.setContentType("text/javascript");
+		String uri = request.getRequestURI().replaceAll("/+", "/");
+		String mimeType = getResourceMimeType(uri);
+		
+		
+		byte[] content = readBinaryFile(request.getPathInfo().substring(1));
+		
+		response.setContentType(mimeType + (mimeType.startsWith("text/") ? ";charset=UTF-8" : ""));
+		response.setDateHeader("Last-Modified", startDate.getTimeInMillis());
+		response.setDateHeader("Expires", System.currentTimeMillis() + maxAge*milliseconds);
+		response.setHeader("Cache-control", "max-age=" + maxAge);
+		response.setContentLength(content.length);
+		response.getOutputStream().write(content);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		
+	}
+	
+	public byte[] readBinaryFile(String file) throws IOException {
+		
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream(file);
+		
+		
+		byte[] result;
+		try {
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+			FileInputStream input = new VirtualFileInputStream(is);
+			try {
+				byte[] buffer = new byte[1024];
+				int bytesRead = -1;
+				while ((bytesRead = input.read(buffer)) != -1) {
+					byteStream.write(buffer, 0, bytesRead);
 				}
-				if (request.getPathInfo().endsWith(".css")) {
-					response.setContentType("text/css");
-				}
-				
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader reader = new BufferedReader(isr);
-				PrintWriter writer = response.getWriter();
-				String text = "";
-
-				while ((text = reader.readLine()) != null) {
-					writer.println(text);
-				}
-				writer.flush();
-				writer.close();
-				isr.close();
-
-			} else {
-				if (request.getPathInfo().endsWith(".png")) {
-					response.setContentType("image/png");
-				}
-
-				BufferedInputStream bis = new BufferedInputStream(is);
-				byte[] tmp = new byte[2048];
-				ServletOutputStream out = response.getOutputStream();
-				while (bis.read(tmp) != -1) {
-					out.write(tmp);
-				}
-				out.flush();
-				out.flush();
-				bis.close();
+				result = byteStream.toByteArray();
+			} finally {
+				byteStream.close();
+				input.close();
 			}
-			is.close();
-			setCache(response);
+		} catch (IOException e) {
+			throw e;
 		}
+		return result;
 	}
 
-	// FIXME
-	private void setCache(HttpServletResponse response) {
-		final int CACHE_DURATION_IN_SECOND = 60 * 60 * 24 * 300; // 2 days
-		final long   CACHE_DURATION_IN_MS = CACHE_DURATION_IN_SECOND  * 1000;
-		long now = System.currentTimeMillis();
-		//res being the HttpServletResponse of the request
-		response.addHeader("Cache-Control", "max-age=" + CACHE_DURATION_IN_SECOND);
-		response.addHeader("Cache-Control", "must-revalidate");//optional
-		response.setDateHeader("Last-Modified", now);
-		response.setDateHeader("Expires", now + CACHE_DURATION_IN_MS);
+	private String getResourceMimeType(String uri) {
+		String extension = uri.substring(uri.lastIndexOf(".") + 1);
+		String mimeType = mimeTypes.containsKey(extension) ? mimeTypes.get(extension) : getServletContext().getMimeType(uri);
+		return mimeType != null ? mimeType : "application/octet-stream";
 	}
+
 }

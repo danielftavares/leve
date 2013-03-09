@@ -39,17 +39,17 @@ public class TableTag extends FormContainerAbstractTag{
 		span.addChild(new SpanHtmlElement("grid-start"));
 		span.addChild(new PureTextHtmlElement(" - "));
 		span.addChild(new SpanHtmlElement("grid-end"));
-		span.addChild(new PureTextHtmlElement(" of "));
+		span.addChild(new PureTextHtmlElement(" "+getMessage("grid.of")+" "));
 		span.addChild(new SpanHtmlElement("grid-count"));
 		
 		div =  th.addChild(new DivHtmlElement("datagrid-footer-right", "display:none")).addChild(new DivHtmlElement("grid-pager"));
 		div.addChild(new ButtonHtmlElement("search", "display: none", null));
 		div.addChild(new ButtonHtmlElement("btn grid-prevpage")).addChild(new IHtmlElement("icon-chevron-left"));
-		div.addChild(new SpanHtmlElement()).addChild(new PureTextHtmlElement("Page"));
+		div.addChild(new SpanHtmlElement()).addChild(new PureTextHtmlElement(getMessage("grid.page")));
 		div.addChild(new SelectHtmlElement());
 		
 		span = div.addChild(new SpanHtmlElement());
-		span.addChild(new PureTextHtmlElement("of "));
+		span.addChild(new PureTextHtmlElement(getMessage("grid.of")+" "));
 		span.addChild(new SpanHtmlElement("grid-pages"));
 		
 		div.addChild(new ButtonHtmlElement("btn grid-nextpage")).addChild(new IHtmlElement("icon-chevron-right"));
@@ -99,7 +99,7 @@ public class TableTag extends FormContainerAbstractTag{
 							.addCustomAttribute("data-dismiss","modal")
 							.addCustomAttribute("aria-hidden","true")).addChild(new PureTextHtmlElement("x"));
 		//close title
-		header.addChild(new HXHtmlElement(3).addCustomAttribute("id", "myModalLabel")).addChild(new PureTextHtmlElement("Pesquisa ..."));
+		header.addChild(new HXHtmlElement(3).addCustomAttribute("id", "myModalLabel")).addChild(new PureTextHtmlElement(getMessage("grid.modal.header")));
 		
 		
 		//body
@@ -109,8 +109,8 @@ public class TableTag extends FormContainerAbstractTag{
 		AbstractHtmlElement footer = root.addChild(new DivHtmlElement("modal-footer"));
 		footer.addChild(new ButtonHtmlElement("btn")
 							.addCustomAttribute("data-dismiss", "modal")
-							.addCustomAttribute("aria-hidden", "true")).addChild(new PureTextHtmlElement("Close"));
-		footer.addChild(new ButtonHtmlElement("btn btn-primary leve-filter").addCustomAttribute("data-tableid", "table-"+getId())).addChild(new PureTextHtmlElement("Find"));
+							.addCustomAttribute("aria-hidden", "true")).addChild(new PureTextHtmlElement(getMessage("close")));
+		footer.addChild(new ButtonHtmlElement("btn btn-primary leve-filter").addCustomAttribute("data-tableid", "table-"+getId())).addChild(new PureTextHtmlElement(getMessage("find")));
 		
 		root.print(out);
 		/*

@@ -9,4 +9,5 @@ body {
 
 iframe.sm_frames {
 	height: 500px;
+	min-width: 870px;
 }

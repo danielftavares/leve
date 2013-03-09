@@ -12,7 +12,7 @@ public class CollumnTag extends FilterTag {
 		
 		StringBuilder sb = new StringBuilder();
 
-		if(this.isFiltrable()){
+		if(this.isFiltrable() && !hasCustomFilter()){
 			sb.append(super.writeBeforeBody());
 			
 			populateFilterInput(sb);

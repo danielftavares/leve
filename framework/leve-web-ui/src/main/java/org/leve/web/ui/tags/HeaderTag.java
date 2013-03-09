@@ -18,7 +18,7 @@ public class HeaderTag extends LeveBaseTag {
 	private String actionBar = "default";
 	
 	public static final String COMMAND_DEFAULT_CAD = "find.search,close.arrow-left,closeall.remove";
-	public static final String ACTION_DEFAULT_CAD = "new.file,save.chevron-down,delete.trash";
+	public static final String ACTION_DEFAULT_CAD = "new.file,save.save,delete.trash";
 	public static final String COMMAND_DEFAULT_FIND = "new.file,close.arrow-left,closeall.remove";
 	public static final String ACTION_DEFAULT_FIND = "";
 	
@@ -37,6 +37,8 @@ public class HeaderTag extends LeveBaseTag {
 		printImportJquery(out);
 
 		printImportBootstrap(out);
+		
+		printImportFontAwesome(out);
 
 		printImportForm2js(out);
 
@@ -77,12 +79,20 @@ public class HeaderTag extends LeveBaseTag {
 		printImportScript(out, "bootstrap/js/bootstrap.min.js");
 
 		printImportScript(out, "bootstrap/js/datagrid.js");
-		printImportCss(out, "bootstrap/css/fuelux.min.css");
+		printImportCss(out, "bootstrap/css/fuelux.grid.min.css");
 
 		printImportCss(out, "bootstrap/css/datepicker.css");
 		printImportScript(out, "bootstrap/js/bootstrap-datepicker.js");
 		printImportScript(out, "bootstrap/js/locales/bootstrap-datepicker."
 				+ getRequestLocaleString() + ".js");
+	}
+	
+	private void printImportFontAwesome(StringBuilder out) {
+		printImportCss(out, "font-awesome/css/font-awesome.min.css");
+		
+		out.append("<!--[if IE 7]>"); 
+		printImportCss(out, "font-awesome/css/font-awesome-ie7.min.css");
+		out.append("<![endif]-->");
 	}
 
 	private void printImportForm2js(StringBuilder out) {
@@ -201,7 +211,7 @@ public class HeaderTag extends LeveBaseTag {
 		if(actionButtons != null && !actionButtons.isEmpty()){
 			for (String btn : actionButtons.split(",")) {
 				String[] btInf = btn.split("\\.");
-				printStartTag(out, HTML_TAG_BUTTON, "class", "btn", "id", btInf[0]);
+				printStartTag(out, HTML_TAG_BUTTON, "class", "btn"+getBtnColor(btInf), "id", btInf[0]);
 				if (btInf.length > 1) {
 					printStartTag(out, HTML_TAG_I, "class", "icon-" + btInf[1]);
 					printEndTag(out, HTML_TAG_I);
@@ -213,6 +223,19 @@ public class HeaderTag extends LeveBaseTag {
 		}
 		
 		printEndTag(out, HTML_TAG_DIV);
+	}
+
+	protected String getBtnColor(String[] btInf) {
+		String colorClass = "";
+		if (btInf[0].equals("save")){
+			colorClass = " btn-primary";
+		} else if(btInf[0].equals("delete")){
+			colorClass = " btn-warning";
+		} else if(btInf[0].equals("new")){
+			colorClass = " btn-info";
+		}
+		
+		return colorClass;
 	}
 
 	private boolean haveCommandBar() {

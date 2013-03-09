@@ -3,7 +3,7 @@ package org.leve.web.ui.tags;
 @SuppressWarnings("serial")
 public class CollumnFunctionTag extends CollumnTag {
 	private String function = "Leve.return_value";
-	private String icon = "icon-share";
+	private String icon = "icon-signin";
 	
 	
 	@Override

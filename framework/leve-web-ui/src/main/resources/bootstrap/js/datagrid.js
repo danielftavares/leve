@@ -67,7 +67,7 @@ $(function(){
 					$th = $('<th>').width(  column.width+ '%' ).data('property', column.property).text(column.label);
 					if (column.sortable) $th.addClass('sortable')
 					if(column.filtrable){
-						var $fa = $('<a class="leve-popover" href="#" >').append($('<i class="icon-filter">'))
+						var $fa = $('<span class="leve-popover" >').append($('<i class="icon-filter">'))
 						$fa.popover({
 							placement: 'bottom',
 							html: true,
@@ -197,9 +197,8 @@ $(function(){
 						$.each(self.columns, function (index, column) {
 							//coluna de botao
 							if(column.funccol){
-								var btn = $('<button />',{
-									'class' : 'btn btn-mini',
-									'type' : 'button'
+								var btn = $('<span />',{
+									'class' : 'leve-col-btn',
 								});
 								btn.click(function(){
 									var fvals = column.funccol.split('\.');
@@ -360,8 +359,8 @@ $(function(){
 	$.fn.datagrid.defaults = {
 		dataOptions: { pageIndex: 0, pageSize: 10 },
 		loadingHTML: '<div class="progress progress-striped active" style="width:50%;margin:auto;"><div class="bar" style="width:100%;"></div></div>',
-		itemsText: 'items',
-		itemText: 'item'
+		itemsText: '',
+		itemText: ''
 	};
 
 	$.fn.datagrid.Constructor = Datagrid;

@@ -206,8 +206,7 @@ $(function() {
 	
 	//grid start
 	$('.leve-tablecolldef').each(function(){
-		var $el = $(this).detach();
-		$el.appendTo('#leve-findmodal_' + $el.data('tableid') +' .modal-body');
+		$(this).appendTo('#leve-findmodal_' + $(this).data('tableid') +' .modal-body');
 	});
 	
 	$('.leve-modalfind .leve-filter').click(function(){

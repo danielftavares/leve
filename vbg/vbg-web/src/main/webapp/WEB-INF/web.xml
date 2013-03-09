@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!-- JBoss, Home of Professional Open Source Copyright 2012, Red Hat, Inc. 
 	and/or its affiliates, and individual contributors by the @authors tag. See 
 	the copyright.txt in the distribution for a full listing of individual contributors. 
@@ -19,23 +20,21 @@
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
 		<url-pattern>/leve/*</url-pattern>
 	</servlet-mapping>
-
-	<security-role>
-		<description>Main Group</description>
-		<role-name>LeveUser</role-name>
-	</security-role>
-
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>All resources</web-resource-name>
-			<description>Protects all resources</description>
-			<url-pattern>/*</url-pattern>
+			<web-resource-name>all jsp</web-resource-name>
+			<description>all jsp</description>
+			<url-pattern>*.jsp</url-pattern>
+		</web-resource-collection>
+		<web-resource-collection>
+			<web-resource-name>All rest</web-resource-name>
+			<description>All rest</description>
+			<url-pattern>/leve/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>LeveUser</role-name>
 		</auth-constraint>
 	</security-constraint>
-	
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<realm-name>LeveAuthDomain</realm-name>
@@ -44,4 +43,8 @@
 			<form-error-page>/WEB-INF/loginError.jsp</form-error-page>
 		</form-login-config>
 	</login-config>
+	<security-role>
+		<description>Main Group</description>
+		<role-name>LeveUser</role-name>
+	</security-role>
 </web-app>
